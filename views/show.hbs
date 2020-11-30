@@ -1,4 +1,6 @@
 <div class="container mt-5 col-lg-4">
-    <span style="display: block">Success! Please use this link:</span>
+    {{#if isRepeatedLongUrl}} <span style="display: block">Oops! This URL has been shortened! Please use this link:</span>
+    {{else}} <span style="display: block">Success! Please use this link:</span>
+    {{/if}}
     <a href="{{long}}" target="_blank">http://localhost:3000/{{short}}</a>
 </div>

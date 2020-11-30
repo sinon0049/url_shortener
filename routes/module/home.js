@@ -10,14 +10,16 @@ router.get('/', (req, res) => {
 router.post('/', (req, res) => {
     let long = req.body.longUrl
     let short = ''
+    let isRepeatedLongUrl = false
     let isRepeatedShortUrl = true
     Url.find()
     .lean()
     .then(urlList => {
         const foundByLongUrl = urlList.find(url => url.longUrl === long)
         if(foundByLongUrl) {
+            isRepeatedLongUrl = true
             short = foundByLongUrl.shortUrl
-            res.render('show', { long, short })
+            res.render('show', { long, short, isRepeatedLongUrl })
         } else {
             while(isRepeatedShortUrl) {
                 short = urlGenerator()
