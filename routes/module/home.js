@@ -8,25 +8,25 @@ router.get('/', (req, res) => {
 })
 
 router.post('/', (req, res) => {
-    let longUrl = req.body.longUrl
-    let shortUrl = ''
+    let long = req.body.longUrl
+    let short = ''
     let isRepeatedShortUrl = true
     Url.find()
     .lean()
     .then(urlList => {
-        if(urlList.find(url => url.longUrl === longUrl)) {
-            shortUrl = urlList[0].shortUrl
-            res.render('show', { longUrl, shortUrl })
-            if(!undefined) console.log('yes')
+        const foundByLongUrl = urlList.find(url => url.longUrl === long)
+        if(foundByLongUrl) {
+            short = foundByLongUrl.shortUrl
+            res.render('show', { long, short })
         } else {
             while(isRepeatedShortUrl) {
-                shortUrl = urlGenerator()
-                if(!urlList.find(url => url.shortUrl === shortUrl)) isRepeatedShortUrl = false
+                short = urlGenerator()
+                if(!urlList.find(url => url.shortUrl === short)) isRepeatedShortUrl = false
             }
             let newUrl = Object.assign(req.body)
-            newUrl.shortUrl = shortUrl
+            newUrl.shortUrl = short
             Url.create(newUrl)
-            res.render('show', {longUrl, shortUrl})
+            res.render('show', { long, short })
         }
     })
     .catch(error => console.log(error))
