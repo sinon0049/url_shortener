@@ -1,6 +1,18 @@
-<div class="container mt-5 col-lg-4">
-    {{#if isRepeatedLongUrl}} <span style="display: block">Oops! This URL has been shortened! Please use this link:</span>
-    {{else}} <span style="display: block">Success! Please use this link:</span>
+<div class="container mt-5 col-lg-4" style="text-align: center">
+    {{#if isRepeatedLongUrl}} <span style="display: block; font-size:large">Oops! This URL has been shortened! Please use this link:</span>
+    {{else}} <span style="display: block; font-size:large">Success! Please use this link:</span>
     {{/if}}
-    <a href="{{long}}" target="_blank">http://localhost:3000/{{short}}</a>
+    <input class="form-control mt-3" type="url" value="http://localhost:3000/{{short}}" id="shortenedUrl" readonly>
+    <button class="btn btn-primary mt-3" type="submit" id="copybtn" onclick="copy()">Copy</button>
 </div>
+
+<script type="text/javascript">
+    function copy() {
+        const shortenedUrl = document.getElementById('shortenedUrl')
+        const copybtn = document.getElementById('copybtn')
+        shortenedUrl.select()
+        document.execCommand("Copy")
+        shortenedUrl.clear
+        copybtn.innerHTML = 'copied!'
+    }
+</script>
